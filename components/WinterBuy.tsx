@@ -27,7 +27,6 @@ export default function WinterBuy({
     if (!window?.document || !collection || !tokenId) return
     if (!!document.getElementById('winter-checkout')) {
       const winterIframe = document.getElementById('winter-checkout') as HTMLIFrameElement
-      console.log("CHANGING THE SRC ON WINTER FRAME")
       winterIframe.src = `https://production-marketplace-nft-checkout.onrender.com/?contractAddress=${collection}&tokenId=${tokenId}${!!buyer ? `&walletAddress=${buyer}` : ''}`
       return
     }

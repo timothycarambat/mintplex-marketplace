@@ -1,4 +1,3 @@
-import { paths } from '@reservoir0x/reservoir-kit-client'
 import React, { FC, useContext } from 'react'
 import { SWRResponse } from 'swr'
 import { useSigner } from 'wagmi'
