@@ -85,6 +85,7 @@ const Index: NextPage<Props> = ({ collectionId, tokenDetails }) => {
       `${router.query?.contract?.toString()}:${router.query?.tokenId?.toString()}`,
     ],
     includeTopBid: true,
+    includeAttributes: true,
   })
 
   const tokens = tokenData.data
