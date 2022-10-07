@@ -6,7 +6,6 @@ import { TokenDetails } from 'types/reservoir'
 import TokenMarketplace from './Marketplace'
 import { setToast } from './setToast'
 
-
 const PROXY_API_BASE = process.env.NEXT_PUBLIC_PROXY_API_BASE
 
 type Props = {
