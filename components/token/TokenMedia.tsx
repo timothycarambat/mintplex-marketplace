@@ -26,6 +26,7 @@ const TokenMedia: FC<Props> = ({ token, tokenOpenSea }) => {
       {tokenOpenSea?.extension === null ? (
         <img
           className="w-full rounded-2xl"
+          alt='token'
           src={optimizeImage(token?.image, 533)}
         />
       ) : (
@@ -64,7 +65,7 @@ const Media: FC<{
   if (extension === 'wav' || extension === 'mp3') {
     return (
       <div>
-        <img className="mb-4 w-[533px] rounded-2xl" src={tokenImage} />
+        <img alt='token multimedia thumbnail' className="mb-4 w-[533px] rounded-2xl" src={tokenImage} />
         <audio className="mb-4 w-full" controls src={animation_url}>
           Your browser does not support the
           <code>audio</code> element.

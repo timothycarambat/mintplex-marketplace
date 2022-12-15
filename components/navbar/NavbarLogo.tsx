@@ -79,6 +79,7 @@ const NavbarLogo: FC<Props> = ({ variant, className }) => {
             href={POWERED_BY_LOGO_SRC.reservoir.path + `?ref=${SITE}`}
             className='cursor-pointer'>
             <img
+              alt='Powered by reservoir'
               src={POWERED_BY_LOGO_SRC.reservoir.logoSrc}
               className={`h-4 w-auto`}
             />
@@ -91,6 +92,7 @@ const NavbarLogo: FC<Props> = ({ variant, className }) => {
             href={POWERED_BY_LOGO_SRC.mintplex.path + `?ref=${SITE}`}
             className='cursor-pointer'>
             <img
+              alt='Powered by mintplex'
               src={POWERED_BY_LOGO_SRC.mintplex.logoSrc}
               className={`h-4 w-auto`}
             />

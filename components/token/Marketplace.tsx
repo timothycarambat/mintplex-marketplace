@@ -11,7 +11,7 @@ interface IProps {
 const MARKETPLACES = {
   opensea: {
     name: 'OpenSea',
-    tokenUrl: (network = 'ethereum', token?: TokenDetails) => `https://opensea.io/assets/${network}/${token?.contract}/${token?.tokenId}`,
+    tokenUrl: (network = 'ethereum', token?: TokenDetails) => `https://opensea.io/assets/${mapNetwork(network)}/${token?.contract}/${token?.tokenId}`,
     networks: ['optimism', 'ethereum', 'homestead', 'polygon'],
     imgSrc: '/icons/OpenSea.svg',
   },
@@ -32,6 +32,15 @@ const MARKETPLACES = {
     tokenUrl: (_network = '', token?: TokenDetails) => `https://qx.app/asset/${token?.contract}/${token?.tokenId}`,
     networks: ['optimism'],
     imgSrc: '/icons/Quix.svg',
+  }
+}
+
+function mapNetwork(network = 'ethereum') {
+  switch (network) {
+    case 'homestead':
+      return 'ethereum';
+    default:
+      return network || 'ethereum'
   }
 }
 
