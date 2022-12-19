@@ -145,9 +145,9 @@ type TokenAttributeProps = {
   collectionTokenCount?: string
 }
 
+const COLLECTION_ID = process.env.NEXT_PUBLIC_COLLECTION
 const TokenAttribute: FC<TokenAttributeProps> = ({
   attribute,
-  collectionId,
   collectionTokenCount,
 }) => {
   const attributeTokenCount = attribute?.tokenCount || 0
@@ -160,7 +160,7 @@ const TokenAttribute: FC<TokenAttributeProps> = ({
   return (
     <Link
       key={`${attribute.key}-${attribute.value}`}
-      href={`/collections/${collectionId}?${formatUrl(
+      href={`/collections/${COLLECTION_ID}?${formatUrl(
         `attributes[${attribute.key}]`
       )}=${formatUrl(`${attribute.value}`)}`}
     >
