@@ -27,14 +27,14 @@ export default function WinterBuy({
     if (!window?.document || !collection || !tokenId) return
     if (!!document.getElementById('winter-checkout')) {
       const winterIframe = document.getElementById('winter-checkout') as HTMLIFrameElement
-      winterIframe.src = `https://production-marketplace-nft-checkout.onrender.com/?contractAddress=${collection}&tokenId=${tokenId}${!!buyer ? `&walletAddress=${buyer}` : ''}`
+      winterIframe.src = `https://checkout.usewinter.com/?contractAddress=${collection}&tokenId=${tokenId}${!!buyer ? `&walletAddress=${buyer}` : ''}`
       return
     }
 
     const root = document.getElementById("__next")
     const winterIframe = document.createElement('iframe');
     winterIframe.id = 'winter-checkout';
-    winterIframe.src = `https://production-marketplace-nft-checkout.onrender.com/?contractAddress=${collection}&tokenId=${tokenId}${!!buyer ? `&walletAddress=${buyer}` : ''}`
+    winterIframe.src = `https://checkout.usewinter.com/?contractAddress=${collection}&tokenId=${tokenId}${!!buyer ? `&walletAddress=${buyer}` : ''}`
     winterIframe.setAttribute('allowtransparency', 'true')
     winterIframe.style.cssText = `
       position: fixed;
