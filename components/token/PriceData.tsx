@@ -24,6 +24,7 @@ import useCoinConversion from 'hooks/useCoinConversion'
 import SwapCartModal from 'components/SwapCartModal'
 import { FaShoppingCart } from 'react-icons/fa'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import { WinterCheckout } from '@usewinter/checkout'
 import useMounted from 'hooks/useMounted'
 import { useRouter } from 'next/router'
 import { getPricing } from 'lib/token/pricing'
@@ -65,6 +66,7 @@ const PriceData: FC<Props> = ({ details, collection, isOwner }) => {
   const [cartToSwap, setCartToSwap] = useState<undefined | typeof cartTokens>()
   const account = useAccount()
   const bidOpenState = useState(true)
+  const [showWinterModal, setShowWinterModal] = useState(false)
 
   const queryBidId = router.query.bidId as string
   const deeplinkToAcceptBid = router.query.acceptBid === 'true'
@@ -137,39 +139,35 @@ const PriceData: FC<Props> = ({ details, collection, isOwner }) => {
   const listSourceLogo =
     isLocalListed && SOURCE_ICON
       ? SOURCE_ICON
-      : `${API_BASE}/redirect/sources/${
-          listSourceDomain || listSourceName
-        }/logo/v2`
+      : `${API_BASE}/redirect/sources/${listSourceDomain || listSourceName
+      }/logo/v2`
 
   if (!CHAIN_ID) return null
 
   const isTopBidder =
     accountData.isConnected &&
     token?.market?.topBid?.maker?.toLowerCase() ===
-      accountData?.address?.toLowerCase()
+    accountData?.address?.toLowerCase()
   const isListed = token
     ? floorAskPrice !== null && token?.token?.kind !== 'erc1155'
     : false
   const isInTheWrongNetwork = Boolean(signer && activeChain?.id !== +CHAIN_ID)
 
-  const offerSourceLogo = `${API_BASE}/redirect/sources/${
-    offerSourceDomain || offerSourceName
-  }/logo/v2`
+  const offerSourceLogo = `${API_BASE}/redirect/sources/${offerSourceDomain || offerSourceName
+    }/logo/v2`
 
-  const listSourceRedirect = `${API_BASE}/redirect/sources/${
-    listSourceDomain || listSourceName
-  }/tokens/${contract}:${tokenId}/link/v2`
+  const listSourceRedirect = `${API_BASE}/redirect/sources/${listSourceDomain || listSourceName
+    }/tokens/${contract}:${tokenId}/link/v2`
 
-  const offerSourceRedirect = `${API_BASE}/redirect/sources/${
-    offerSourceDomain || offerSourceName
-  }/tokens/${contract}:${tokenId}/link/v2`
+  const offerSourceRedirect = `${API_BASE}/redirect/sources/${offerSourceDomain || offerSourceName
+    }/tokens/${contract}:${tokenId}/link/v2`
 
   const isInCart = Boolean(tokensMap[`${contract}:${tokenId}`])
 
   const showAcceptOffer =
     token?.market?.topBid?.id !== null &&
-    token?.market?.topBid?.id !== undefined &&
-    isOwner
+      token?.market?.topBid?.id !== undefined &&
+      isOwner
       ? true
       : false
 
@@ -334,6 +332,17 @@ const PriceData: FC<Props> = ({ details, collection, isOwner }) => {
                 }}
               />
 
+              {!isOwner &&
+                <BuyWithWinter
+                  showing={showWinterModal}
+                  account={account}
+                  contractAddress={collection?.id}
+                  tokenId={token?.token?.tokenId}
+                  onClose={() => setShowWinterModal(false)}
+                  onClick={() => setShowWinterModal(true)}
+                />
+              }
+
               {!isOwner && (
                 <BidModal
                   collectionId={collection?.id}
@@ -466,3 +475,51 @@ const Price: FC<{
     </div>
   </div>
 )
+
+
+const PRIMARY_COLOR = process.env.NEXT_PUBLIC_PRIMARY_COLOR || '#7000FF'
+const WINTER_ENABLED = process.env.NEXT_PUBLIC_ENABLE_WINTER === 'true'
+type IBuyWithWinter = {
+  showing: boolean;
+  account: {
+    isConnected: boolean;
+    address: string | undefined
+  };
+  contractAddress: string | undefined;
+  tokenId: string | undefined;
+  onClick: VoidFunction;
+  onClose: VoidFunction;
+}
+const BuyWithWinter = ({ showing, account, contractAddress, tokenId, onClick, onClose }: IBuyWithWinter) => {
+  if (!contractAddress || !tokenId || !WINTER_ENABLED) return null;
+
+  return (
+    <div>
+      <button
+        onClick={onClick}
+        className="btn-primary-outline w-full dark:border-neutral-600 dark:text-white dark:ring-primary-900 dark:focus:ring-4">
+        Buy with Card
+      </button>
+      <div >
+        <WinterCheckout
+          showModal={showing}
+          walletAddress={account.isConnected ? account.address : undefined}
+          contractAddress={contractAddress}
+          tokenId={tokenId}
+          onClose={onClose}
+          production={true}
+          appearance={{
+            leftBackgroundColor: "#131317",
+            rightBackgroundColor: "#22222d",
+            buttonTextColor: "white",
+            buttonColor: PRIMARY_COLOR,
+            primaryTextColor: "#FFF",
+            secondaryTextColor: "#FFF",
+            fontFamily: "Montserrat,sans-serif",
+            borderColor: PRIMARY_COLOR,
+          }}
+        />
+      </div>
+    </div>
+  )
+}
