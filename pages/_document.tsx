@@ -35,6 +35,7 @@ const MyDocument = function () {
       <title>{META_TITLE}</title>
       <meta name="description" content={META_DESCRIPTION} />
       <meta name="keywords" content="NFT, API, Protocol" />
+      <meta name='mintplex-marketplace-version' content='v1.1.0' />
       {/* Twitter */}
       {/* The optimal size is 1200 x 630 (1.91:1 ratio). */}
       <meta name="twitter:image" content={OG_IMAGE} />
@@ -82,9 +83,8 @@ const MyDocument = function () {
 
       {chain && chain.network ? (
         <meta
-          property={`reservoir:token-url-${
-            chain.network === 'homestead' ? 'mainnet' : chain.network
-          }`}
+          property={`reservoir:token-url-${chain.network === 'homestead' ? 'mainnet' : chain.network
+            }`}
           content="/${contract}/${tokenId}"
         />
       ) : (

@@ -24,10 +24,11 @@ import useCoinConversion from 'hooks/useCoinConversion'
 import SwapCartModal from 'components/SwapCartModal'
 import { FaShoppingCart } from 'react-icons/fa'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { WinterCheckout } from '@usewinter/checkout'
 import useMounted from 'hooks/useMounted'
 import { useRouter } from 'next/router'
 import { getPricing } from 'lib/token/pricing'
+// @ts-ignore
+import { WinterCheckout } from '@usewinter/checkout'
 
 const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID
 const SOURCE_ID = process.env.NEXT_PUBLIC_SOURCE_ID
