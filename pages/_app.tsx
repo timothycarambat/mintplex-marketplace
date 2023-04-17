@@ -121,10 +121,17 @@ const App: FC<AppProps & { baseUrl: string }> = ({
   const marketplaceTheme = THEME_SWITCHING_ENABLED ? theme : defaultTheme
 
   useEffect(() => {
+    const isPresetColor = Object.keys(presetColors).includes(PRIMARY_COLOR)
     const primaryColor = (PRIMARY_COLOR as string) || 'default'
-    const primaryColorPalette = (
+    const primaryColorPalette = isPresetColor ? (
       presetColors as Record<string, Record<string, string>>
-    )[primaryColor]
+    )[primaryColor] : {
+      100: PRIMARY_COLOR,
+      300: PRIMARY_COLOR,
+      500: PRIMARY_COLOR,
+      700: PRIMARY_COLOR,
+      900: PRIMARY_COLOR,
+    }
 
     if (marketplaceTheme == 'dark') {
       setReservoirKitTheme(
