@@ -239,9 +239,19 @@ const PriceData: FC<Props> = ({ details, collection, isOwner }) => {
         </div>
         <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
           {account.isDisconnected ? (
-            <ConnectWalletButton className="w-full">
-              <span>Connect Wallet</span>
-            </ConnectWalletButton>
+            <>
+              <ConnectWalletButton className="w-full">
+                <span>Connect Wallet</span>
+              </ConnectWalletButton>
+              {isListed && <BuyWithWinter
+                showing={showWinterModal}
+                account={account}
+                contractAddress={contract}
+                tokenId={tokenId}
+                onClose={() => setShowWinterModal(false)}
+                onClick={() => setShowWinterModal(true)}
+              />}
+            </>
           ) : (
             <>
               {isOwner && (
@@ -337,8 +347,8 @@ const PriceData: FC<Props> = ({ details, collection, isOwner }) => {
                 <BuyWithWinter
                   showing={showWinterModal}
                   account={account}
-                  contractAddress={collection?.id}
-                  tokenId={token?.token?.tokenId}
+                  contractAddress={contract}
+                  tokenId={tokenId}
                   onClose={() => setShowWinterModal(false)}
                   onClick={() => setShowWinterModal(true)}
                 />
@@ -492,6 +502,7 @@ type IBuyWithWinter = {
   onClose: VoidFunction;
 }
 const BuyWithWinter = ({ showing, account, contractAddress, tokenId, onClick, onClose }: IBuyWithWinter) => {
+  console.log({ contractAddress, tokenId })
   if (!contractAddress || !tokenId || !WINTER_ENABLED) return null;
 
   return (
